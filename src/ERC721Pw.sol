@@ -3,7 +3,7 @@ pragma solidity >=0.8.0;
 
 import {ERC721} from "solmate/tokens/ERC721.sol";
 
-abstract contract ERC721Password is ERC721 {
+abstract contract ERC721Pw is ERC721 {
     // id => password hash
     mapping(uint => bytes32) public locks;
     // id => timestamp

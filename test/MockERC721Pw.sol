@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 pragma solidity >=0.8.0;
 
-import {ERC721Password} from "../src/ERC721Password.sol";
+import {ERC721Pw} from "../src/ERC721Pw.sol";
 
-contract MockERC721Password is ERC721Password {
-    constructor(string memory _name, string memory _symbol) ERC721Password(_name, _symbol) {}
+contract MockERC721Pw is ERC721Pw {
+    constructor(string memory _name, string memory _symbol) ERC721Pw(_name, _symbol) {}
 
     function tokenURI(uint256) public pure virtual override returns (string memory) {}
 

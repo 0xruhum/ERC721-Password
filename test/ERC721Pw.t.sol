@@ -2,12 +2,12 @@ pragma solidity >=0.8.0;
 
 import "forge-std/Test.sol";
 
-import {MockERC721Password} from "./MockERC721Password.sol";
+import {MockERC721Pw} from "./MockERC721Pw.sol";
 
-contract ERC721PasswordTest is Test {
-    MockERC721Password token;
+contract ERC721PwTest is Test {
+    MockERC721Pw token;
     function setUp() public {
-        token = new MockERC721Password("Token", "TKN");
+        token = new MockERC721Pw("Token", "TKN");
     }
 
     function testOwnerCanLock() public {

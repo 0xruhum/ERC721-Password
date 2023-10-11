@@ -2,20 +2,20 @@ pragma solidity >=0.8.0;
 
 import "forge-std/Test.sol";
 
-import {MockERC721Password} from "./MockERC721Password.sol";
+import {MockERC721Pw} from "./MockERC721Pw.sol";
 
 /**
 * All of these tests are copied from solmate. We execute the whole test suite to
 * verify that the base functionality works.
 * In none of these tests do we interact with the password stuff introduced by the
-* ERC721Password contract. Instead, the contract is treated like a normal ERC721 contract.
+* ERC721Pw contract. Instead, the contract is treated like a normal ERC721 contract.
 * see https://github.com/transmissions11/solmate/blob/0384dbaaa4fcb5715738a9254a7c0a4cb62cf458/src/test/ERC721.t.sol
 */
 
 contract ERC721Test is Test {
-    MockERC721Password token;
+    MockERC721Pw token;
     function setUp() public {
-        token = new MockERC721Password("Token", "TKN");
+        token = new MockERC721Pw("Token", "TKN");
     }
 
     function testMint() public {
@@ -322,7 +322,7 @@ contract ERC721Test is Test {
     }
 
     function testMetadata(string memory name, string memory symbol) public {
-        MockERC721Password tkn = new MockERC721Password(name, symbol);
+        MockERC721Pw tkn = new MockERC721Pw(name, symbol);
 
         assertEq(tkn.name(), name);
         assertEq(tkn.symbol(), symbol);
