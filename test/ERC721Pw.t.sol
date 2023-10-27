@@ -101,7 +101,6 @@ contract ERC721PwTest is Test {
         assertEq(token.locks(1), 0x0);
     }
 
-
     function testResetForceUnlockOnTransfer() public {
         token.mint(address(this), 1);
         token.lock(1, keccak256("password"));
@@ -111,5 +110,27 @@ contract ERC721PwTest is Test {
         token.transferFrom(address(this), vm.addr(2), 1);
 
         assertEq(token.force_unlock(1), 0);
+    }
+
+    function testUnlockAndTransfer() public {
+        token.mint(address(this), 1);
+        token.lock(1, keccak256("password")); 
+
+        token.unlockAndTransfer(1, "password", vm.addr(2));
+
+        assertEq(token.ownerOf(1), vm.addr(2));
+    }
+
+    function testTransferAndLock() public {
+        address alice = vm.addr(2);
+        token.mint(alice, 1);
+        vm.prank(alice);
+        token.approve(address(this), 1);
+
+        bytes32 pw = keccak256("password");
+        token.transferAndLock(1, pw, alice);
+
+        assertEq(token.ownerOf(1), address(this));
+        assertEq(token.locks(1), pw);
     }
 }

@@ -16,7 +16,7 @@ abstract contract ERC721Pw is ERC721 {
 
     constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) {}
 
-    function lock(uint id, bytes32 password) external {
+    function lock(uint id, bytes32 password) public {
         require(msg.sender == _ownerOf[id], "NOT_AUTHORIZED");
         require(locks[id] == 0x0, "ALREADY_LOCKED");
     
@@ -25,7 +25,7 @@ abstract contract ERC721Pw is ERC721 {
         emit Locked(id, msg.sender, password);
     }
 
-    function unlock(uint id, bytes calldata plaintext) external {
+    function unlock(uint id, bytes calldata plaintext) public {
         // should the approved person also be allowed to unlock it?
         require(msg.sender == _ownerOf[id], "NOT_AUTHORIZED");
         require(locks[id] == keccak256(plaintext), "WRONG_PASSWORD");
@@ -74,4 +74,14 @@ abstract contract ERC721Pw is ERC721 {
         force_unlock[id] = 0;
         super._burn(id);
     } 
+
+    function unlockAndTransfer(uint id, bytes calldata plaintext, address to) external {
+        unlock(id, plaintext);
+        transferFrom(msg.sender, to, id);
+    }
+
+    function transferAndLock(uint id, bytes32 password, address from) external {
+        transferFrom(from, msg.sender, id);
+        lock(id, password);
+    }
 }
